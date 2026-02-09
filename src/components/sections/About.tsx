@@ -1,109 +1,156 @@
-import { motion } from 'framer-motion';
-import { Award, Users, Film } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 
+import UrviSvg from '../../assets/Team/URvi-01.svg';
+import ChiragSvg from '../../assets/Team/CHIRAG-01.svg';
+import ParasSvg from '../../assets/Team/PARAS-01.svg';
+import RupeshSvg from '../../assets/Team/RUPESH-01.svg';
 
-interface AboutProps {
-    id?: string;
-    className?: string;
+interface TeamMember {
+  name: string;
+  position: string;
+  role: string;
+  image: string;
 }
 
-const About = ({ id = "about", className }: AboutProps) => {
-    const stats = [
-        { number: "150+", label: "Projects Delivered" },
-        { number: "12", label: "Years Experience" },
-        { number: "40+", label: "Industry Awards" },
-    ];
+const teamMembers: TeamMember[] = [
+  { name: 'Urvi Shah', position: 'Founder', role: 'Creative Director & Visionary behind Aarkit Cinematic Solutions', image: UrviSvg },
+  { name: 'Chirag', position: 'Cinematographer', role: 'Capturing cinematic visuals with precision and artistry', image: ChiragSvg },
+  { name: 'Paras', position: 'Editor', role: 'Crafting seamless narratives through post-production excellence', image: ParasSvg },
+  { name: 'Rupesh', position: 'VFX Artist', role: 'Bringing imagination to life with stunning visual effects', image: RupeshSvg },
+];
 
-    const expertise = [
-        {
-            icon: <Film className="w-6 h-6" />,
-            title: "Commercial Production",
-            desc: "Brand films, advertisements, and promotional content that drives engagement."
-        },
-        {
-            icon: <Users className="w-6 h-6" />,
-            title: "Creative Direction",
-            desc: "Art direction, visual strategy, and concept development from inception to delivery."
-        },
-        {
-            icon: <Award className="w-6 h-6" />,
-            title: "Post-Production",
-            desc: "Color grading, VFX, sound design, and editorial services at the highest level."
-        },
-    ];
+interface AboutProps {
+  id?: string;
+  className?: string;
+}
 
-    return (
-        <section
-            id={id}
-            className={clsx(
-                "h-[100dvh] w-screen flex items-center justify-center bg-primary flex-shrink-0 relative overflow-hidden",
-                className
-            )}
-        >
+const About = ({ id = 'about', className }: AboutProps) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [tappedIndex, setTappedIndex] = useState<number | null>(null);
 
+  const activeIndex = hoveredIndex ?? tappedIndex;
 
-            <div className="max-w-7xl px-8 w-full grid md:grid-cols-12 gap-16 items-start">
-                {/* Left: Title & Description */}
-                <div className="md:col-span-5">
+  const handleTap = (index: number) => {
+    setTappedIndex(prev => (prev === index ? null : index));
+  };
+
+  return (
+    <section
+      id={id}
+      className={clsx(
+        'h-[100dvh] w-screen flex flex-col items-center justify-center flex-shrink-0 relative overflow-hidden',
+        className
+      )}
+      style={{ background: '#F2DD5E' }}
+    >
+      {/* Heading */}
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 md:mb-14 text-center"
+        style={{ fontFamily: "'UnifrakturCook', cursive", color: '#1a1a1a' }}
+      >
+        About Us
+      </motion.h2>
+
+      {/* Team Cards Row */}
+      <div className="w-full max-w-7xl px-4 md:px-8">
+        <div className="flex flex-nowrap gap-5 md:gap-6 lg:gap-8 justify-center overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory lg:snap-none">
+          {teamMembers.map((member, index) => {
+            const isActive = activeIndex === index;
+            const hasActive = activeIndex !== null;
+
+            return (
+              <motion.div
+                key={member.name}
+                className="relative flex-shrink-0 snap-center"
+                style={{ width: 'clamp(220px, 22vw, 300px)' }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => handleTap(index)}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.12, duration: 0.5 }}
+              >
+                {/* SVG Card - main visible card */}
+                <motion.div
+                  className={clsx(
+                    'relative z-10 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500',
+                    hasActive && !isActive && 'blur-[3px] scale-[0.96] opacity-50'
+                  )}
+                  animate={{
+                    scale: isActive ? 1.05 : 1,
+                  }}
+                  transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  style={{
+                    boxShadow: isActive
+                      ? '0 20px 60px rgba(0,0,0,0.3), 0 0 0 2px #F2DD5E'
+                      : '0 8px 30px rgba(0,0,0,0.15)',
+                  }}
+                >
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-auto block"
+                    draggable={false}
+                  />
+
+                </motion.div>
+
+                {/* Info card sliding out to the right from behind */}
+                <AnimatePresence>
+                  {isActive && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
+                      initial={{ x: 0, opacity: 0 }}
+                      animate={{ x: '90%', opacity: 1 }}
+                      exit={{ x: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className="absolute top-0 left-0 z-0 rounded-2xl px-5 py-6 flex flex-col justify-center"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)',
+                        boxShadow: '-4px 4px 24px rgba(0,0,0,0.4)',
+                        border: '1.5px solid #F2DD5E',
+                      }}
                     >
-                        <span className="text-accent text-xs uppercase tracking-[0.3em] font-mono mb-8 block">About Us</span>
-                        <h2 className="text-display-md font-display font-bold text-text mb-6 leading-tight">
-                            Crafting Visual<br />
-                            <span className="text-accent">Narratives</span>
-                        </h2>
-                        <p className="text-lg text-muted leading-relaxed mb-8">
-                            Aarkit Cinematic Solutions is a full-service production studio specializing in
-                            high-caliber visual storytelling. We merge technical precision with artistic vision
-                            to create work that resonates across platforms.
-                        </p>
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-3 gap-6 mt-12">
-                            {stats.map((stat, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0 }}
-                                    whileInView={{ opacity: 1 }}
-                                    transition={{ delay: index * 0.1, duration: 0.6 }}
-                                >
-                                    <div className="text-3xl font-bold text-accent mb-1">{stat.number}</div>
-                                    <div className="text-xs uppercase tracking-wider text-muted">{stat.label}</div>
-                                </motion.div>
-                            ))}
-                        </div>
+                      <p
+                        className="text-base md:text-lg font-bold uppercase tracking-wider"
+                        style={{ color: '#F2DD5E' }}
+                      >
+                        {member.name}
+                      </p>
+                      <p
+                        className="text-xs md:text-sm font-semibold uppercase tracking-widest mt-1"
+                        style={{ color: '#E0C040' }}
+                      >
+                        {member.position}
+                      </p>
+                      <p
+                        className="text-[11px] md:text-xs mt-3 leading-relaxed"
+                        style={{ color: '#bbb' }}
+                      >
+                        {member.role}
+                      </p>
                     </motion.div>
-                </div>
+                  )}
+                </AnimatePresence>
 
-                {/* Right: Expertise List */}
-                <div className="md:col-span-7 space-y-6">
-                    {expertise.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.15, duration: 0.6 }}
-                            className="border-l-2 border-border pl-6 py-4 group hover:border-accent transition-colors duration-300"
-                        >
-                            <div className="flex items-start gap-4">
-                                <div className="text-accent mt-1 group-hover:scale-110 transition-transform duration-300">
-                                    {item.icon}
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-text mb-2">{item.title}</h3>
-                                    <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                {/* Mobile: always-visible name below card */}
+                <div className="lg:hidden mt-3 text-center">
+                  <p className="text-xs font-bold" style={{ color: '#1a1a1a' }}>{member.name}</p>
+                  <p className="text-[10px]" style={{ color: '#555' }}>{member.position}</p>
                 </div>
-            </div>
-        </section>
-    );
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default About;
