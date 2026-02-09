@@ -1,23 +1,40 @@
 import express from "express";
 import cors from "cors";
-import db from "./db.js";
+import supabase from "./supabase.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/invoice/:id", (req, res) => {
-    const sql = `
-    SELECT c.name, c.email, c.address,
-           i.id AS invoice_id, i.invoice_date, i.total
-    FROM clients c
-    JOIN invoices i ON c.id = i.client_id
-    WHERE i.id = ?
-  `;
+app.get("/api/invoice/:id", async (req, res) => {
+    const invoiceId = req.params.id;
 
-    db.query(sql, [req.params.id], (err, result) => {
-        if (err) return res.status(500).json(err);
-        res.json(result[0]);
+    const { data, error } = await supabase
+        .from("invoices")
+        .select(`
+      id,
+      invoice_date,
+      total,
+      clients (
+        name,
+        email,
+        address
+      )
+    `)
+        .eq("id", invoiceId)
+        .single();
+
+    if (error) {
+        return res.status(500).json(error);
+    }
+
+    res.json({
+        invoice_id: data.id,
+        invoice_date: data.invoice_date,
+        total: data.total,
+        name: data.clients.name,
+        email: data.clients.email,
+        address: data.clients.address
     });
 });
 
