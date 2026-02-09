@@ -4,12 +4,14 @@ import gsap from 'gsap';
 import walkData from '../../assets/walk.json';
 import idleData from '../../assets/idle.json';
 import landingData from '../../assets/landing.json';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 interface MascotProps {
     containerRef: React.RefObject<HTMLDivElement | null>;
+    startLanding?: boolean;
 }
 
-const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingComplete?: () => void }) => {
+const Mascot = ({ containerRef, onLandingComplete, startLanding = true }: MascotProps & { onLandingComplete?: () => void }) => {
     const walkContainerRef = useRef<HTMLDivElement>(null);
     const idleContainerRef = useRef<HTMLDivElement>(null);
     const landingContainerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +23,17 @@ const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingCo
     const [isWalking, setIsWalking] = useState(false);
     const [isLanding, setIsLanding] = useState(true);
 
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
+    const mascotSize = isDesktop ? 180 : 120;
+
     const scrollTimeout = useRef<number | null>(null);
+
+    // Watch for startLanding signal
+    useEffect(() => {
+        if (startLanding && landingAnimRef.current && landingAnimRef.current.isPaused) {
+            landingAnimRef.current.play();
+        }
+    }, [startLanding]);
 
     // Initialize animations
     useEffect(() => {
@@ -68,13 +80,15 @@ const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingCo
                     container: landingContainerRef.current,
                     renderer: 'svg',
                     loop: false,
-                    autoplay: true,
+                    autoplay: false, // Wait for signal
                     animationData: landingData,
                     rendererSettings: { preserveAspectRatio: 'xMidYMid meet' }
                 });
 
                 landingAnimRef.current.addEventListener('DOMLoaded', () => {
-
+                    if (startLanding) {
+                        landingAnimRef.current?.play();
+                    }
                 });
 
                 landingAnimRef.current.addEventListener('complete', () => {
@@ -92,7 +106,7 @@ const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingCo
             idleAnimRef.current?.destroy();
             landingAnimRef.current?.destroy();
         };
-    }, []);
+    }, []); // Only run on mount to init
 
     const handleLandingComplete = () => {
         if (!wrapperRef.current) return;
@@ -158,7 +172,10 @@ const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingCo
                 walkAnim.goToAndStop(frame, true);
             }
 
-            const moveDistanceOfScreen = window.innerWidth * 0.88;
+            const currentMascotSize = window.innerWidth < 1024 ? 120 : 180;
+            const currentPadding = window.innerWidth < 1024 ? 16 : 32;
+            const moveDistanceOfScreen = window.innerWidth - currentMascotSize - (currentPadding * 2);
+
             if (wrapperRef.current) {
                 wrapperRef.current.style.transform = `translateX(${progress * moveDistanceOfScreen}px) scaleX(${facingRight.current ? 1 : -1})`;
             }
@@ -187,8 +204,8 @@ const Mascot = ({ containerRef, onLandingComplete }: MascotProps & { onLandingCo
                 // While landing, we let GSAP control size/pos. 
                 // After landing, we use these styles as base.
                 bottom: isLanding ? 'auto' : '10px',
-                width: isLanding ? '100vw' : '180px',
-                height: isLanding ? '100vh' : '180px',
+                width: isLanding ? '100vw' : `${mascotSize}px`,
+                height: isLanding ? '100vh' : `${mascotSize}px`,
                 transition: isLanding ? 'none' : 'transform 75ms ease-linear'
             }}
         >

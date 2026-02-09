@@ -18,36 +18,31 @@ const HomeExperience = () => {
     const [isLoading, setIsLoading] = useState(true);
     const scrollerRef = useRef<HTMLDivElement>(null);
     const isDesktop = useMediaQuery('(min-width: 1024px)');
-    const [isLandingComplete, setIsLandingComplete] = useState(false);
 
     return (
         <div className="bg-background text-text antialiased lg:overflow-hidden min-h-screen relative">
             <CanvasCursor />
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
                 {isLoading && (
                     <Loader onLoadingComplete={() => setIsLoading(false)} />
                 )}
             </AnimatePresence>
 
-            {!isLoading && (
-                <>
-                    <SeamlessBackground scrollerRef={scrollerRef} isVisible={isLandingComplete} />
-                    <HorizontalScrollContainer
-                        scrollerRef={scrollerRef}
-                        isDesktop={isDesktop}
-                        onLandingComplete={() => setIsLandingComplete(true)}
-                    >
-                        <Hero id="hero" />
-                        <Services id="services" />
-                        <Projects id="projects" />
-                        <Gallery id="gallery" />
-                        <Clients id="clients" />
-                        <About id="about" />
-                        <Contact id="contact" />
-                    </HorizontalScrollContainer>
-                </>
-            )}
+            <SeamlessBackground scrollerRef={scrollerRef} isVisible={true} />
+            <HorizontalScrollContainer
+                scrollerRef={scrollerRef}
+                isDesktop={isDesktop}
+                startLanding={!isLoading}
+            >
+                <Hero id="hero" />
+                <Services id="services" />
+                <Projects id="projects" />
+                <Gallery id="gallery" />
+                <Clients id="clients" />
+                <About id="about" />
+                <Contact id="contact" />
+            </HorizontalScrollContainer>
         </div>
     );
 };

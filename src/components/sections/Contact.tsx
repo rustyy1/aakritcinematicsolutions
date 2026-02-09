@@ -37,7 +37,7 @@ const Contact = ({ id = "contact", className }: ContactProps) => {
         <section
             id={id}
             className={clsx(
-                "min-h-[100dvh] lg:h-[100dvh] w-full lg:w-screen flex items-center justify-center bg-background flex-shrink-0 relative overflow-hidden py-20 lg:py-0",
+                "h-[100dvh] w-screen flex items-center justify-center bg-background flex-shrink-0 relative overflow-hidden py-20 lg:py-0",
                 className
             )}
         >
