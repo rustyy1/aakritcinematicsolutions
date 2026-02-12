@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
@@ -7,42 +6,38 @@ interface ClientsProps {
     className?: string;
 }
 
-type Invoice = {
-    name: string;
-    email: string;
-    address: string;
-    invoice_id: number;
-    invoice_date: string;
-    total: number;
-};
+const VIDEO_DATA = [
+    { id: 1, youtubeId: "HykInVYwRiA", title: "Client_feedback_01" },
+    { id: 2, youtubeId: "SeNeIppmQlM", title: "Client_feedback_02" },
+    { id: 3, youtubeId: "HykInVYwRiA", title: "Client_feedback_03" },
+];
+
+const LOGO_DATA = [
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703591283/cvent_24b078703c.png", alt: "Cvent" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703590779/JSW_logo_770f0648f3.png", alt: "JSW Cement" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1701938100/Raymond_logo_7462355f71.png", alt: "Raymond" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1742214497/airtel_84b315ed5d.png", alt: "Airtel" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703591971/polycab_df9ce7878a.png", alt: "Polycab" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703593791/sbi_life_3739c22a6a.png", alt: "SBI Life Insurance" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703593988/AM_NS_473d3019c5.png", alt: "AM/NS" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1742214585/boat_1585425796.png", alt: "Boat" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703668393/jsw_paints_cb5c2ba731.png", alt: "JSW Paints" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703669032/npci_94e7e6619b.png", alt: "NPCI" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703669409/wadhwa_0725f2732b.png", alt: "Wadhwa" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1703762844/yes_bank_c97db56e4e.png", alt: "Yes Bank" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1704197828/tvs_e237d69019.png", alt: "TVS" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1704279240/fi_a094e228f7.png", alt: "Fi" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1704280017/hdfc_ergo_a1137f9a16.png", alt: "HDFC Ergo" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1704279476/pbazzar_92506c7743.png", alt: "Policy Bazaar" },
+    { src: "https://res.cloudinary.com/dccjqha6a/image/upload/v1705044251/tata_metalicks_dd3814a083.png", alt: "TATA Metalicks" },
+];
 
 const Clients = ({ id = "clients", className }: ClientsProps) => {
-    const [invoice, setInvoice] = useState<Invoice | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        fetch("http://localhost:5000/api/invoice/1")
-            .then(res => {
-                if (!res.ok) throw new Error("Failed to fetch invoice");
-                return res.json();
-            })
-            .then(data => {
-                setInvoice(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
-
     return (
         <section
             id={id}
             className={clsx(
-                // CHANGED: items-center for vertical centering, removed pt-24
-                "h-[100dvh] w-screen flex items-center justify-center bg-primary flex-shrink-0 relative overflow-hidden",
+                "min-h-[100dvh] w-screen flex flex-col items-center bg-primary flex-shrink-0 relative overflow-hidden pt-[4vh]",
                 className
             )}
         >
@@ -51,105 +46,90 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#00ff8899,transparent_50%)]" />
             </div>
 
-            <div className="relative z-10 w-full max-w-6xl px-8">
-                {/* CHANGED: Removed gap-20 and used space-y-12 to keep it tight in the center */}
-                <div className="flex flex-col items-center justify-center text-center space-y-12">
+            <div className="relative z-10 w-full mb-10">
+                <div className="flex flex-col items-center justify-start text-center">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold text-black mb-12"
+                    >
+                        Our Feedback
+                    </motion.h2>
 
-                    {/* Title + Description */}
-                    <div className="w-full max-w-2xl space-y-6">
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="font-display text-[clamp(2.8rem,4vw,4.8rem)] font-bold leading-tight bg-gradient-to-r from-white to-emerald-300 bg-clip-text text-transparent drop-shadow-[0_10px_25px_rgba(0,0,0,0.4)]"
-                        >
-                            Client Invoice
-                        </motion.h2>
-                    </div>
-
-                    {/* Invoice Card Container - REMOVED mt-20 to allow flex centering */}
-                    {/* Invoice Card Container */}
-                    <div className="w-full relative flex justify-center items-center">
-                        {invoice && (
+                    {/* Feedback Videos */}
+                    <div className="flex flex-row flex-nowrap items-center gap-12 w-full overflow-x-auto px-[5vw] pb-20 no-scrollbar">
+                        {VIDEO_DATA.map((video, index) => (
                             <motion.div
-                                initial={{ opacity: 0, y: 60 }}
-                                animate={{
-                                    opacity: 1,
-                                    // This keeps the floating animation running constantly
-                                    y: [0, -15, 0],
-                                    rotateX: [0, 2, 0],
-                                }}
-                                // NEW: Pop-up effect that happens ON TOP of the floating
-                                whileHover={{
-                                    scale: 1.1,         // Pops out toward the user
-                                    rotateX: 0,         // Optional: flattens the paper for readability
-                                    transition: { duration: 0.2 }
-                                }}
-                                transition={{
-                                    y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                                    rotateX: { duration: 5, repeat: Infinity, ease: "easeInOut" }
-                                }}
-                                // Added cursor-pointer so users know they can interact with it
-                                className="relative mx-auto w-[320px] sm:w-[350px] [perspective:1000px]"
+                                key={`${video.id}-${index}`}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ y: -30 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="relative aspect-[3/2] w-[320px] md:w-[420px] lg:w-[480px] flex-shrink-0 mx-auto"
                             >
-                                {/* The Clip/Hanging Bar */}
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-5 bg-stone-800 rounded-t-md shadow-lg z-20" />
-
-                                {/* Invoice Paper - Added transition and hover shadow */}
-                                <div className="relative bg-[#F5F1E8] text-[#3E322B] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_80px_150px_-20px_rgba(0,0,0,0.6)] px-8 py-20 font-mono flex flex-col items-center justify-center text-center min-h-[350px] border border-[#DED4C1]">
-
-                                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]" />
-
-                                    {/* --- Content Inside --- */}
-                                    <div className="mb-auto">
-                                        <h3 className="text-2xl font-black tracking-[0.3em] mb-2 border-b-2 border-stone-800 pb-1">
-                                            INVOICE
-                                        </h3>
-                                        <p className="text-[10px] opacity-50 uppercase tracking-widest">Official Document</p>
-                                    </div>
-
-                                    <div className="flex-1 flex flex-col justify-center space-y-6 w-full">
-                                        <div className="space-y-1">
-                                            <p className="text-[10px] text-stone-400 uppercase">Billed To</p>
-                                            <p className="font-bold text-sm">{invoice.name}</p>
-                                            <p className="text-[11px] truncate px-4">{invoice.email}</p>
-                                            <p className="text-[10px] uppercase tracking-tighter">{invoice.address}</p>
-                                        </div>
-
-                                        <div className="w-full border-t border-dashed border-stone-300" />
-
-                                        <div className="space-y-1">
-                                            <p className="text-[10px] text-stone-400 uppercase">Details</p>
-                                            <p className="text-xs font-bold">#INV-00{invoice.invoice_id}</p>
-                                            <p className="text-[11px]">{new Date(invoice.invoice_date).toLocaleDateString()}</p>
-                                        </div>
-
-                                        <div className="w-full border-t border-dashed border-stone-300" />
-
-                                        <div className="pt-4">
-                                            <p className="text-[10px] text-stone-400 uppercase mb-1">Total Amount</p>
-                                            <p className="text-3xl font-black text-emerald-900">
-                                                {new Intl.NumberFormat("en-IN", {
-                                                    style: "currency",
-                                                    currency: "INR",
-                                                }).format(invoice.total)}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-auto pt-10">
-                                        <div className="w-12 h-12 border-2 border-stone-200 rounded-full flex items-center justify-center mx-auto opacity-20">
-                                            <span className="text-[8px] font-bold">PAID</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="absolute top-0 left-0 w-full h-2 bg-[repeating-linear-gradient(90deg,transparent,transparent_4px,rgba(0,0,0,0.05)_4px,rgba(0,0,0,0.05)_8px)]" />
-                                    <div className="absolute bottom-0 left-0 w-full h-2 bg-[repeating-linear-gradient(90deg,transparent,transparent_4px,rgba(0,0,0,0.05)_4px,rgba(0,0,0,0.05)_8px)]" />
+                                <div
+                                    className="relative h-full w-full bg-black rounded-3xl overflow-hidden border-[6px]"
+                                    style={{ borderColor: '#0a0a0aff' }}
+                                >
+                                    <iframe
+                                        className="w-full h-full"
+                                        src={`https://www.youtube.com/embed/${video.youtubeId}?modestbranding=1&rel=0`}
+                                        title={video.title}
+                                        allowFullScreen
+                                    />
                                 </div>
                             </motion.div>
-                        )}
+                        ))}
                     </div>
+                </div>
+            </div>
+
+            {/* --- INFINITE LOGO SCROLLER --- */}
+            {/* --- INFINITE LOGO SCROLLER --- */}
+            {/* CHANGE: I updated 'mt-20' to 'mt-40' and 'md:mt-32' to 'md:mt-80'. 
+    This creates a much larger gap below the video frames.
+*/}
+            <div className="relative z-10 w-full mt-40 md:mt-80 bg-black py-10">
+
+                {/* CHANGE: I added 'pt-10' to ensure the "WE WORKED WITH" text 
+        starts lower inside the black bar.
+    */}
+                <div className="px-[5vw] pt-10 mb-8">
+                    <h3 className="text-white/30 text-4xl md:text-6xl font-bold tracking-tighter uppercase italic">
+                        WE WORKED WITH
+                    </h3>
+                </div>
+
+                <div className="flex overflow-hidden relative">
+                    {/* Gradient Fades */}
+                    <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-20" />
+                    <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-20" />
+
+                    <motion.div
+                        initial={{ x: 0 }}
+                        animate={{ x: "-50%" }}
+                        transition={{
+                            duration: 25,
+                            ease: "linear",
+                            repeat: Infinity,
+                        }}
+                        className="flex flex-row whitespace-nowrap items-center"
+                    >
+                        {[...LOGO_DATA, ...LOGO_DATA].map((logo, index) => (
+                            <div
+                                key={index}
+                                // 'h-[80px]' keeps the logo bar slim and professional
+                                className="flex justify-center items-center h-[80px] min-w-[120px] md:min-w-[150px] px-4"
+                            >
+                                <img
+                                    src={logo.src}
+                                    alt={logo.alt}
+                                    className="h-8 md:h-10 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity brightness-0 invert"
+                                />
+                            </div>
+                        ))}
+                    </motion.div>
                 </div>
             </div>
         </section>
