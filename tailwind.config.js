@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import colors from 'tailwindcss/colors'
+
 export default {
   content: [
     "./index.html",
@@ -6,14 +8,21 @@ export default {
   ],
   theme: {
     extend: {
-      primary: "#1a1a1a", // Deep Onyx -> Dark Text/Primary
-      secondary: "#333333", // Charcoal -> Lighter Dark
-      accent: "#000000", // Electric Mint -> Black Accent (high contrast)
-      background: "#F2DD5E", // User requested background
-      surface: "#F7E68D", // Slightly lighter/shifted version of background for surface
-      text: "#1a1a1a", // Dark text for light background
-      muted: "#555555", // Darker muted for visibility
-      border: "#E0C040", // Darker binding yellow
+      colors: {
+        // Keep custom colors
+        primary: "#1a1a1a",
+        secondary: "#333333",
+        accent: "#000000",
+        background: "#F2DD5E",
+        surface: "#F7E68D",
+        text: "#1a1a1a",
+        muted: "#555555",
+        border: "#E0C040",
+        "neon-chartreuse": "#E0FE08",
+        "neon-lime": "#CEFE55",
+        // Add Tailwind default colors
+        ...colors,
+      },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Inter', 'sans-serif'],
