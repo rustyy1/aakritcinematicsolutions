@@ -19,7 +19,7 @@ function App() {
           element={<HomeExperience onLandingComplete={() => setIsHomeLandingComplete(true)} />}
         />
       </Routes>
-      <FloatingContactMenu />
+      <FloatingContactMenu isVisible={shouldShowNavbar} />
     </>
   );
 }

@@ -39,7 +39,7 @@ const QUICK_LINKS: QuickLink[] = [
 const RAISIN_BLACK = '#282828';
 const SITE_BACKGROUND = '#F2DD5E';
 
-const FloatingContactMenu = () => {
+const FloatingContactMenu = ({ isVisible = true }: { isVisible?: boolean }) => {
     const [isOpen, setIsOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +66,7 @@ const FloatingContactMenu = () => {
         return () => document.removeEventListener('mousedown', handleOutsideClick);
     }, []);
 
-    if (typeof document === 'undefined') {
+    if (typeof document === 'undefined' || !isVisible) {
         return null;
     }
 

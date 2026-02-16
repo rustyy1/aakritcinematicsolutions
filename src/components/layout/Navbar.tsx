@@ -153,23 +153,47 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
                                 <AnimatePresence>
                                     {isMobileMenuOpen && (
                                         <motion.div
-                                            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                             transition={{ duration: 0.2, ease: 'easeOut' }}
-                                            className="absolute top-full mt-2 overflow-hidden rounded-2xl border border-white/30 bg-[#F2DD5E]/95 shadow-[0_16px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+                                            className="absolute top-full mt-4 rounded-[32px] backdrop-blur-2xl origin-top-right"
                                             style={{
                                                 right: '8px',
-                                                width: 'min(220px, calc(100vw - 20px))',
+                                                width: '300px',
+                                                maxWidth: 'calc(100vw - 20px)',
+                                                padding: '40px 20px',
+                                                backgroundColor: 'rgba(20, 20, 20, 0.85)',
+                                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                boxShadow:
+                                                    '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                                             }}
                                         >
-                                            <div className="flex flex-col p-2">
+                                            <div className="flex flex-col gap-[15px]">
                                                 {SECTION_LINKS.map((section) => (
                                                     <button
                                                         key={section.id}
                                                         type="button"
                                                         onClick={() => handleSectionClick(section.id)}
-                                                        className="rounded-xl px-3 py-2.5 text-left text-base font-semibold uppercase tracking-[0.08em] text-[#1a1a1a] transition-colors"
+                                                        className="
+                                                            relative
+                                                            flex items-center justify-center
+                                                            w-full
+                                                            rounded-full
+                                                            px-6
+                                                            text-[20px] font-semibold tracking-wide text-[#1a1a1a]
+                                                            transition-all duration-200 ease-out
+                                                            hover:scale-[1.02] hover:-translate-y-0.5 active:scale-[0.98]
+                                                            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50
+                                                        "
+                                                        style={{
+                                                            backgroundColor: '#ffffff',
+                                                            border: 'none',
+                                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                                                            fontFamily: 'var(--font-primary)',
+                                                            height: '45px',
+                                                            textTransform: 'none', // Reset since original was uppercase via class, but quicklinks uses label directly
+                                                        }}
                                                     >
                                                         {section.label}
                                                     </button>

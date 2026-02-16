@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import walkData from '../../assets/walk.json';
 import idleData from '../../assets/idle.json';
 import landingData from '../../assets/landing.json';
+import landingMobileData from '../../assets/mobile/Landing_mobile.json';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
 interface MascotProps {
@@ -91,6 +92,7 @@ const Mascot = ({ containerRef, onLandingComplete, startLanding = true }: Mascot
         // --- Landing Animation ---
         if (landingContainerRef.current) {
             try {
+                const animationData = isDesktop ? landingData : landingMobileData;
 
                 if (landingAnimRef.current) landingAnimRef.current.destroy();
                 landingAnimRef.current = lottie.loadAnimation({
@@ -98,7 +100,7 @@ const Mascot = ({ containerRef, onLandingComplete, startLanding = true }: Mascot
                     renderer: 'svg',
                     loop: false,
                     autoplay: false, // Wait for signal
-                    animationData: landingData,
+                    animationData: animationData,
                     rendererSettings: { preserveAspectRatio: 'xMidYMid meet' }
                 });
 
