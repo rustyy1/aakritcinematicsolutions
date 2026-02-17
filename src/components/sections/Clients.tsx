@@ -13,9 +13,9 @@ interface ClientsProps {
 }
 
 const VIDEO_DATA = [
-    { id: 1, youtubeId: "HykInVYwRiA", title: "Client_feedback_01" },
-    { id: 2, youtubeId: "SeNeIppmQlM", title: "Client_feedback_02" },
-    { id: 3, youtubeId: "HykInVYwRiA", title: "Client_feedback_03" },
+    { id: 1, youtubeId: "RrxEfXlgCOk", title: "Client_feedback_01" },
+    { id: 2, youtubeId: "CSd3O9GAgXY", title: "Client_feedback_02" },
+    { id: 3, youtubeId: "BySkjQPpuJE", title: "Client_feedback_03" },
 ];
 
 const LOGO_DATA = [
@@ -135,7 +135,7 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                whileHover={{ y: -30 }}
+
                                 transition={{ delay: index * 0.1 }}
                                 style={{
                                     flexShrink: 0,
@@ -147,12 +147,12 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                                 <div
                                     style={{
                                         position: "relative",
-                                        height: "100%",
+                                        height: "90%",
                                         width: "100%",
                                         backgroundColor: "black",
                                         borderRadius: "1.5rem",
                                         overflow: "hidden",
-                                        border: "6px solid #0a0a0a",
+                                        border: "6px solid #0e1201ff",
                                     }}
                                 >
                                     <iframe
