@@ -93,20 +93,56 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                     </motion.h2>
 
                     {/* DESKTOP VIDEOS */}
-                    <div className="desktop-video-row">
+                    <div className="desktop-video-row !pb-32">
                         {VIDEO_DATA.map((video, index) => (
-                            <motion.div
+                            <div
                                 key={`desktop-${video.id}`}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                style={{ flexShrink: 0, width: "420px", aspectRatio: "3/2", position: "relative" }}
+                                style={{
+                                    flexShrink: 0,
+                                    width: "440px",
+                                    aspectRatio: "16/10",
+                                    position: "relative"
+                                }}
                             >
-                                <div style={{ position: "relative", height: "100%", width: "100%", backgroundColor: "black", borderRadius: "1.5rem", overflow: "hidden", border: "6px solid #fea800" }}>
-                                    <iframe style={{ width: "100%", height: "100%" }} src={`https://www.youtube.com/embed/${video.youtubeId}?modestbranding=1&rel=0`} title={video.title} allowFullScreen />
+                                {/* 1. OUTER AMBIENT GLOW (Subtle interaction with yellow BG) */}
+                                <div className="absolute inset-x-10 -bottom-4 h-1/2 bg-black/20 blur-3xl -z-10" />
+
+                                {/* 2. MAIN DEVICE FRAME */}
+                                <div className={clsx(
+                                    "h-full w-full bg-[#141414] overflow-hidden",
+                                    "rounded-[2rem] p-[8px]", // Thinner, more precise bezel
+                                    "shadow-[0_20px_50px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)]", // Multi-layer shadow + rim light
+                                )}>
+
+                                    {/* 3. THE SCREEN AREA */}
+                                    <div className="relative h-full w-full overflow-hidden rounded-[1.6rem] bg-black group">
+
+                                        {/* Professional Lens Reflection (Static) */}
+                                        <div className="absolute inset-0 z-10 bg-gradient-to-tr from-white/5 via-transparent to-transparent pointer-events-none" />
+
+                                        {/* Subtle Internal Bezel Shadow */}
+                                        <div className="absolute inset-0 z-10 shadow-[inset_0_4px_12px_rgba(0,0,0,0.9)] pointer-events-none" />
+
+                                        <iframe
+                                            style={{ width: "100%", height: "100%", border: "none" }}
+                                            src={`https://www.youtube.com/embed/${video.youtubeId}?modestbranding=1&rel=0&controls=1`}
+                                            title={video.title}
+                                            allowFullScreen
+                                        />
+                                    </div>
                                 </div>
-                            </motion.div>
+
+                                {/* 4. REFINED DATA TAG */}
+                                <div className="mt-8 flex items-center justify-between px-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="flex h-2 w-2 rounded-full bg-red-600 animate-pulse" /> {/* "Live" status dot */}
+                                        <p className="text-black text-[11px] font-black uppercase tracking-[0.3em]">
+
+                                        </p>
+                                    </div>
+                                    <p className="text-black/40 text-[9px] font-mono font-medium"></p>
+                                </div>
+                            </div>
                         ))}
                     </div>
 
@@ -139,9 +175,8 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                 </div>
 
                 {/* Orange Pill Container */}
-                <div className="mx-auto w-[72%] mt-[5vh]  max-w-6xl">
-                    <div className="relative h-24 md:h-32 bg-[#fea800] rounded-full flex items-center overflow-hidden shadow-[0_10px_40px_rgba(255,107,0,0.3)]">
-
+                <div className="mx-auto w-[72%] mt-[7vh]  max-w-6xl">
+                    <div className="relative h-24 md:h-32 bg-gradient-to-r from-[#f59e0b] to-[#fbbf24] px-12 rounded-full flex items-center overflow-hidden shadow-[0_15px_45px_rgba(245,158,11,0.25)] border border-white/20">
                         <div className="home-logo-wrapper">
                             <div className="clients-grid logo-animate">
                                 {LOGO_DATA.map((logo, index) => (
