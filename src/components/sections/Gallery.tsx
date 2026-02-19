@@ -408,7 +408,7 @@ const Gallery = ({ id = "gallery", className }: GalleryProps) => {
                 className
             )}
         >
-            <div className="w-full h-full max-w-7xl mx-auto px-8 flex flex-col pt-32 pb-12">
+            <div className="w-full h-full max-w-7xl mx-auto px-8 flex flex-col pt-48 pb-12">
                 {/* Title Section - Single Line */}
                 <div className="text-center shrink-0 mb-8">
                     <span className="text-secondary text-xs uppercase tracking-[0.3em] font-mono mb-3 block">Visual Diary</span>

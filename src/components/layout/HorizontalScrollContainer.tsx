@@ -28,16 +28,36 @@ const HorizontalScrollContainer = ({
     const [isMascotLanding, setIsMascotLanding] = useState(true);
 
     useEffect(() => {
-        // Only enable smooth horizontal scroll on desktop
-        if (!isDesktop) return;
-
         const container = scrollerRef.current;
         if (!container) return;
 
-        // Initialize smooth horizontal scroller
-        const cleanup = createSmoothHorizontalScroller(container);
+        let cleanupScroller = () => { };
+        let scrollTo = (pos: number, _immediate = false, _duration = 1000) => { container.scrollLeft = pos; }; // Default
 
-        return cleanup;
+        if (isDesktop) {
+            const scroller = createSmoothHorizontalScroller(container);
+            cleanupScroller = scroller.cleanup;
+            scrollTo = scroller.scrollTo;
+        }
+
+        const handleNavigate = (e: CustomEvent<{ sectionId: string }>) => {
+            const section = document.getElementById(e.detail.sectionId);
+            if (section) {
+                if (isDesktop) {
+                    // Use a longer duration (1500ms) for a more cinematic feel
+                    scrollTo(section.offsetLeft, false, 1500);
+                } else {
+                    section.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+                }
+            }
+        };
+
+        window.addEventListener('navigate-section', handleNavigate as EventListener);
+
+        return () => {
+            cleanupScroller();
+            window.removeEventListener('navigate-section', handleNavigate as EventListener);
+        };
     }, [isDesktop, scrollerRef]);
 
     return (

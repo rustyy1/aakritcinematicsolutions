@@ -15,13 +15,14 @@ interface NavbarProps {
 }
 
 const SECTION_LINKS: SectionLink[] = [
-    { id: 'hero', label: 'Studio' },
+    { id: 'hero', label: 'Home' },
     { id: 'services', label: 'Services' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'projects', label: 'Portfolio' },
     { id: 'gallery', label: 'Gallery' },
-    { id: 'clients', label: 'Clients' },
-    { id: 'about', label: 'About' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'clients', label: 'Client Feedback' },
+    { id: 'about', label: 'About Us' },
+    { id: 'team', label: 'Team' },
+    { id: 'contact', label: 'Contact Us' },
 ];
 
 const Navbar = ({ isVisible = true }: NavbarProps) => {
@@ -39,11 +40,11 @@ const Navbar = ({ isVisible = true }: NavbarProps) => {
                 return;
             }
 
-            document.getElementById(sectionId)?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-            });
+            window.dispatchEvent(
+                new CustomEvent('navigate-section', {
+                    detail: { sectionId },
+                })
+            );
         },
         [location.pathname, navigate]
     );
