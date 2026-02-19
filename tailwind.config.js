@@ -6,18 +6,19 @@ export default {
   ],
   theme: {
     extend: {
-      primary: "#1a1a1a", // Deep Onyx -> Dark Text/Primary
-      secondary: "#333333", // Charcoal -> Lighter Dark
-      accent: "#000000", // Electric Mint -> Black Accent (high contrast)
-      background: "#F2DD5E", // User requested background
-      surface: "#F7E68D", // Slightly lighter/shifted version of background for surface
-      text: "#1a1a1a", // Dark text for light background
-      muted: "#555555", // Darker muted for visibility
-      border: "#E0C040", // Darker binding yellow
+      primary: "#0057ff", // Behance Bright Blue
+      secondary: "#959595", // Medium Grey
+      accent: "#0057ff", // Behance Bright Blue
+      background: "#191919", // Behance Dark Grey
+      surface: "#252525", // Lighter surface
+      text: "#e8e8e8", // Off-white
+      muted: "#707070", // Darker grey
+      border: "#3c3c3c", // Dark border
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Inter', 'sans-serif'],
+        display: ['Montserrat', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
+        retroica: ['Retroica', 'sans-serif'],
       },
       fontSize: {
         'display-xl': ['clamp(3rem, 8vw, 8rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],

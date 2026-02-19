@@ -1,0 +1,159 @@
+.folder {
+  --folder-W: 120px;
+  --folder-H: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+  /* Removed container background to let folder stand out */
+  border-radius: 20px;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); Remove container shadow */
+  height: var(--folder-H);
+  width: var(--folder-W);
+  position: relative;
+  perspective: 600px;
+  z-index: 10;
+}
+
+.folder__back {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--folder-back-color), var(--folder-color));
+  border-radius: 0px 20px 20px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.folder__back::after {
+  content: "";
+  position: absolute;
+  bottom: 98%;
+  left: 0;
+  width: 30px;
+  height: 10px;
+  background: var(--folder-back-color);
+  border-radius: 10px 10px 0 0;
+}
+
+.folder__front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  /* Glossy Gradient */
+  /* Removed Glossy Gradient */
+  background: var(--folder-color);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 20px 20px;
+  transform-origin: bottom;
+  transform: rotateX(-20deg);
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  /* Enhanced glass effect */
+}
+
+.folder__front.right {
+  height: 90%;
+  border-radius: 20px;
+  opacity: 0.8;
+  z-index: 9;
+  transform: rotateX(-20deg) translateY(-2px) scale(0.95);
+  background: inherit;
+  /* Inherit gradient */
+}
+
+.folder.open .folder__front {
+  transform: rotateX(-50deg);
+}
+
+.paper {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  /* Use CSS variables for transform values */
+  --tx: -50%;
+  --rot: 0deg;
+  transform: translateX(var(--tx)) rotate(var(--rot));
+
+  width: 90%;
+  /* Make papers wider to fill the horizontal space */
+  height: 90%;
+  /* Make papers taller */
+  background: var(--paper-color, #fff);
+  border-radius: 10px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Bouncier transition */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.paper-1 {
+  background: var(--paper-1, #f0f0f0);
+  bottom: 15%;
+  z-index: 4;
+}
+
+.paper-2 {
+  background: var(--paper-2, #e0e0e0);
+  bottom: 13%;
+  z-index: 3;
+  --rot: 2deg;
+}
+
+.paper-3 {
+  background: var(--paper-3, #d0d0d0);
+  bottom: 11%;
+  z-index: 2;
+  --rot: -1deg;
+}
+
+.paper-4 {
+  background: var(--paper-4, #c0c0c0);
+  bottom: 9%;
+  z-index: 1;
+  --rot: -3deg;
+}
+
+/* Horizontal spread logic */
+.folder.open .paper-1 {
+  bottom: 120%;
+  --tx: -140%;
+  --rot: -5deg;
+  z-index: 4;
+}
+
+.folder.open .paper-2 {
+  bottom: 120%;
+  --tx: -80%;
+  --rot: -2deg;
+  z-index: 4;
+}
+
+.folder.open .paper-3 {
+  bottom: 120%;
+  --tx: -20%;
+  --rot: 2deg;
+  z-index: 4;
+}
+
+.folder.open .paper-4 {
+  bottom: 120%;
+  --tx: 40%;
+  --rot: 5deg;
+  z-index: 4;
+}
+
+/* Hover effect on opened papers */
+.folder.open .paper:hover {
+  transform: translateX(var(--tx)) rotate(var(--rot)) scale(1.1) translateY(-10px);
+  z-index: 10;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

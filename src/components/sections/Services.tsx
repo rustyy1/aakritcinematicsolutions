@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion';
-import { Camera, Clapperboard, MonitorPlay, Mic2 } from 'lucide-react';
+import { useState } from 'react';
+import { Film, Box, MonitorPlay, Building2, Camera, Video, FileVideo, Scissors, Pencil } from 'lucide-react';
 import clsx from 'clsx';
+import Folder from '../ui/Folder';
+import mascot from '../../assets/images/mascot.png';
 
 interface ServicesProps {
     id?: string;
@@ -8,26 +10,68 @@ interface ServicesProps {
 }
 
 const Services = ({ id = "services", className }: ServicesProps) => {
-    const services = [
+    const [openFolderIndex, setOpenFolderIndex] = useState<number | null>(null);
+
+    const handleFolderToggle = (index: number) => {
+        setOpenFolderIndex(prevIndex => (prevIndex === index ? null : index));
+    };
+
+    const productionServices = [
         {
-            icon: <Clapperboard className="w-8 h-8" />,
-            title: "Film Production",
-            description: "End-to-end production for commercials, documentaries, and branded content with cinema-grade quality."
+            icon: <Video className="w-8 h-8" />,
+            title: "Product Packshot",
+            description: ""
         },
         {
             icon: <Camera className="w-8 h-8" />,
-            title: "Photography",
-            description: "High-end product, fashion, and editorial photography that captures the essence of your brand."
+            title: <>Digital &<br />Corporate Films</>,
+            description: ""
         },
+        {
+            icon: <Scissors className="w-8 h-8" />,
+            title: "Editing",
+            description: ""
+        },
+    ];
+
+    const postProductionServices = [
         {
             icon: <MonitorPlay className="w-8 h-8" />,
-            title: "Post-Production",
-            description: "Advanced editing, color grading, and VFX to polish your visual narrative to perfection."
+            title: "VFX",
+            description: ""
         },
         {
-            icon: <Mic2 className="w-8 h-8" />,
-            title: "Sound Design",
-            description: "Immersive audio engineering and custom soundscapes that elevate the visual experience."
+            icon: <Film className="w-8 h-8" />,
+            title: <>Animation<br />(2D & 3D)</>,
+            description: ""
+        },
+        {
+            icon: <FileVideo className="w-8 h-8" />, // Moved from Production
+            title: "Architectural Walkthrough",
+            description: ""
+        },
+        {
+            icon: <Box className="w-8 h-8" />,
+            title: "3D Modelling",
+            description: ""
+        }
+    ];
+
+    const designServices = [
+        {
+            icon: <Box className="w-8 h-8" />,
+            title: "Pre-Visualisation",
+            description: ""
+        },
+        {
+            icon: <Building2 className="w-8 h-8" />,
+            title: "Layout Animation",
+            description: ""
+        },
+        {
+            icon: <Pencil className="w-8 h-8" />,
+            title: <>Story Boarding &<br />Concept Art</>,
+            description: ""
         }
     ];
 
@@ -35,42 +79,92 @@ const Services = ({ id = "services", className }: ServicesProps) => {
         <section
             id={id}
             className={clsx(
-                "h-[100dvh] w-screen flex items-center justify-center bg-background flex-shrink-0 relative overflow-hidden py-20 lg:py-0",
+                "h-[100dvh] w-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100 flex-shrink-0 relative py-20 lg:py-0",
                 className
             )}
         >
             <div className="max-w-7xl px-8 w-full">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="mb-16"
-                >
-                    <span className="text-accent text-xs uppercase tracking-[0.3em] font-mono mb-4 block">Our Expertise</span>
-                    <h2 className="text-display-md font-display font-bold text-text mb-6">
-                        Comprehensive<br />
-                        <span className="text-accent">Solutions</span>
-                    </h2>
-                </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="bg-primary/50 backdrop-blur-sm border border-white/10 p-8 hover:border-accent/50 transition-colors duration-300 group"
-                        >
-                            <div className="text-accent mb-6 group-hover:scale-110 transition-transform duration-300">
-                                {service.icon}
-                            </div>
-                            <h3 className="text-xl font-bold text-text mb-4">{service.title}</h3>
-                            <p className="text-muted text-sm leading-relaxed">
-                                {service.description}
-                            </p>
-                        </motion.div>
-                    ))}
+
+                <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start py-10 w-full relative z-10 px-4 space-y-32 lg:space-y-0 lg:space-x-12">
+
+                    {/* Folder 1: Production */}
+                    <div className="relative flex flex-col items-center" style={{ zIndex: openFolderIndex === 0 ? 50 : 1 }}>
+                        <Folder
+                            size={openFolderIndex === null ? 2 : openFolderIndex === 0 ? 2.3 : 1.5}
+                            color="#8b5cf6" // Purple
+                            className="z-10"
+                            isOpen={openFolderIndex === 0}
+                            onToggle={() => handleFolderToggle(0)}
+                            maxItems={3}
+                            spreadDirection="center"
+                            items={productionServices.slice(0, 3).map((service, index) => (
+                                <div key={index} className="flex flex-col items-center justify-center h-full w-full p-6 text-center bg-white rounded-[10px] card-shadow relative overflow-hidden">
+                                    {/* Mascot Placeholder - User to replace src with local asset */}
+                                    <img src={mascot} alt="Mascot" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 object-contain opacity-10 pointer-events-none select-none" />
+                                    <h4 className="font-bold text-xs text-black mb-1 font-retroica relative z-10">{service.title}</h4>
+                                    {service.description && (
+                                        <p className="text-[8px] leading-tight text-gray-600 line-clamp-3">
+                                            {service.description}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        />
+
+                    </div>
+
+                    {/* Folder 2: Post-Production */}
+                    <div className="relative flex flex-col items-center" style={{ zIndex: openFolderIndex === 1 ? 50 : 1 }}>
+                        <Folder
+                            size={openFolderIndex === null ? 2 : openFolderIndex === 1 ? 2.3 : 1.5}
+                            color="#8b5cf6" // Purple
+                            className="z-10"
+                            isOpen={openFolderIndex === 1}
+                            onToggle={() => handleFolderToggle(1)}
+                            maxItems={4}
+                            spreadDirection="center"
+                            items={postProductionServices.slice(0, 4).map((service, index) => (
+                                <div key={index} className="flex flex-col items-center justify-center h-full w-full p-6 text-center bg-white rounded-[10px] card-shadow relative overflow-hidden">
+                                    {/* Mascot Placeholder */}
+                                    <img src={mascot} alt="Mascot" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 object-contain opacity-10 pointer-events-none select-none" />
+                                    <h4 className="font-bold text-xs text-black mb-1 font-retroica relative z-10">{service.title}</h4>
+                                    {service.description && (
+                                        <p className="text-[8px] leading-tight text-gray-600 line-clamp-3">
+                                            {service.description}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        />
+
+                    </div>
+
+                    {/* Folder 3: 3D & Architecture */}
+                    <div className="relative flex flex-col items-center" style={{ zIndex: openFolderIndex === 2 ? 50 : 1 }}>
+                        <Folder
+                            size={openFolderIndex === null ? 2 : openFolderIndex === 2 ? 2.3 : 1.5}
+                            color="#8b5cf6" // Purple
+                            className="z-10"
+                            isOpen={openFolderIndex === 2}
+                            onToggle={() => handleFolderToggle(2)}
+                            maxItems={3}
+                            spreadDirection="center"
+                            items={designServices.slice(0, 3).map((service, index) => (
+                                <div key={index} className="flex flex-col items-center justify-center h-full w-full p-6 text-center bg-white rounded-[10px] card-shadow relative overflow-hidden">
+                                    {/* Mascot Placeholder */}
+                                    <img src={mascot} alt="Mascot" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 object-contain opacity-10 pointer-events-none select-none" />
+                                    <h4 className="font-bold text-xs text-black mb-1 font-retroica relative z-10">{service.title}</h4>
+                                    {service.description && (
+                                        <p className="text-[8px] leading-tight text-gray-600 line-clamp-3">
+                                            {service.description}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        />
+
+                    </div>
                 </div>
             </div>
         </section>
