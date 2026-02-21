@@ -52,11 +52,11 @@ const Gallery = ({ id = "gallery", className }: GalleryProps) => {
         <section
             id={id}
             className={clsx(
-                "h-screen w-screen flex flex-col bg-primary flex-shrink-0 relative overflow-hidden",
+                "h-[100dvh] w-screen flex flex-col items-center justify-center bg-primary flex-shrink-0 relative overflow-hidden",
                 className
             )}
         >
-            <div className="w-full h-full max-w-7xl mx-auto px-8 flex flex-col pt-48 pb-12">
+            <div className="w-full max-w-[1400px] mx-auto z-10 flex flex-col items-center justify-center px-6 md:px-12">
                 {/* Title Section */}
                 <div className="text-center shrink-0 mb-8">
                     <span className="text-secondary text-xs uppercase tracking-[0.3em] font-mono mb-3 block">Visual Diary</span>

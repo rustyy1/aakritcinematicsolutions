@@ -44,95 +44,84 @@ const Contact = ({ id = "contact", className }: ContactProps) => {
             {/* Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a2a2a_1px,transparent_1px),linear-gradient(to_bottom,#2a2a2a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-10" />
 
-            <div className="max-w-7xl w-full px-8 relative z-10">
-                <div className="grid md:grid-cols-12 gap-16">
-                    {/* Left: Title & Contact Info */}
-                    <div className="md:col-span-5">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <span className="text-accent text-xs uppercase tracking-[0.3em] font-mono mb-8 block">Get in Touch</span>
-                            <h2 className="text-display-md font-display font-bold text-text mb-12 leading-tight">
-                                Let's Create<br />
-                                <span className="text-accent">Together</span>
-                            </h2>
+            <div className="mx-auto max-w-[1400px] w-full px-8 md:px-16 lg:px-24 xl:px-32 relative z-10 flex flex-col justify-center">
+                <div className="w-full max-w-[800px]">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="mb-8 block"
+                    >
+                        <span className="text-text font-bold text-xs uppercase tracking-[0.3em] font-mono mb-4 block">Get in Touch</span>
+                        <h2 className="text-[4rem] md:text-[5rem] lg:text-[5.5rem] font-display font-bold text-text leading-[0.95]">
+                            Let's Create<br />
+                            Together
+                        </h2>
+                    </motion.div>
 
-                            <div className="space-y-8">
-                                {/* Contact info removed as per request */}
-                            </div>
-                        </motion.div>
-                    </div>
+                    <motion.form
 
-                    {/* Right: Minimal Form */}
-                    <div className="md:col-span-7">
-                        <motion.form
-                            onSubmit={handleSubmit}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.6 }}
-                            className="space-y-6"
-                        >
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder="Name"
-                                        className="w-full bg-transparent border-b-2 border-border py-4 text-text placeholder:text-muted focus:border-accent focus:outline-none transition-colors"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="w-full bg-transparent border-b-2 border-border py-4 text-text placeholder:text-muted focus:border-accent focus:outline-none transition-colors"
-                                    />
-                                </div>
-                            </div>
+                        onSubmit={handleSubmit}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="space-y-4 flex flex-col gap-[1em] mt-[1em]"
+                    >
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Name"
+                                style={{ height: '60px', padding: '0 24px', borderRadius: '30px' }}
+                                className="w-full bg-[#ffe562] focus:bg-[#ffea81] border border-black/20 text-text placeholder:text-muted focus:border-black/50 focus:outline-none transition-colors text-sm"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                style={{ height: '60px', padding: '0 24px', borderRadius: '30px' }}
+                                className="w-full bg-[#ffe562] focus:bg-[#ffea81] border border-black/20 text-text placeholder:text-muted focus:border-black/50 focus:outline-none transition-colors text-sm"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Project Type"
+                                style={{ height: '60px', padding: '0 24px', borderRadius: '30px' }}
+                                className="w-full bg-[#ffe562] focus:bg-[#ffea81] border border-black/20 text-text placeholder:text-muted focus:border-black/50 focus:outline-none transition-colors text-sm"
+                            />
+                        </div>
+                        <div>
+                            <textarea
+                                rows={4}
+                                placeholder="Message"
+                                style={{ minHeight: '160px', padding: '24px', borderRadius: '24px' }}
+                                className="w-full bg-[#ffe562] focus:bg-[#ffea81] border border-black/20 text-text placeholder:text-muted focus:border-black/50 focus:outline-none transition-colors resize-none text-sm"
+                            ></textarea>
+                        </div>
 
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Project Type"
-                                    className="w-full bg-transparent border-b-2 border-border py-4 text-text placeholder:text-muted focus:border-accent focus:outline-none transition-colors"
-                                />
-                            </div>
-
-                            <div>
-                                <textarea
-                                    rows={4}
-                                    placeholder="Tell us about your project"
-                                    className="w-full bg-transparent border-b-2 border-border py-4 text-text placeholder:text-muted focus:border-accent focus:outline-none transition-colors resize-none"
-                                ></textarea>
-                            </div>
-
+                        <div className="pt-4 flex flex-col items-start gap-4">
                             <button
                                 type="submit"
-                                className="group flex items-center gap-3 px-8 py-4 bg-accent text-background font-medium uppercase tracking-wider text-sm hover:bg-opacity-90 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] hover:scale-[1.02]"
+                                style={{ padding: '10px 20px', borderRadius: '30px', border: '1px solid black' }}
+                                className="group flex items-center gap-2 text-text font-semibold uppercase tracking-wider text-[11px] hover:bg-black/5 transition-colors"
                             >
                                 <span>Send Message</span>
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </button>
 
-                            {status === 'success' && (
-                                <p className="text-accent text-sm uppercase tracking-[0.3em]">
-                                    Message queued — we’ll reply within 24 hours.
-                                </p>
-                            )}
-                        </motion.form>
-                    </div>
-                </div>
+                            <div className='mt-[1em]'>
+                                <p className="text-text font-semibold text-[11px] tracking-wide">© 2024 Aarkit Cinematic Solutions. All rights reserved.</p>
+                            </div>
+                        </div>
 
-                {/* Footer Note */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
-                    className="mt-20 text-center"
-                >
-                    <p className="text-muted text-sm">© 2024 Aarkit Cinematic Solutions. All rights reserved.</p>
-                </motion.div>
+                        {status === 'success' && (
+                            <p className="absolute bottom-[-3em] text-text text-sm uppercase tracking-[0.3em] font-medium mt-4">
+                                Message queued — we’ll reply within 24 hours.
+                            </p>
+                        )}
+                    </motion.form>
+                </div>
             </div>
         </section>
     );
