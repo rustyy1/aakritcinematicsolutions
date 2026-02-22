@@ -200,7 +200,7 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
                 </div>
 
                 {/* ── DESKTOP VIDEOS SCROLLER ── */}
-                <div className="desktop-video-row w-full" style={{ paddingTop: "30px", paddingBottom: "30px" }}>
+                <div className="desktop-video-row w-full" style={{ paddingTop: "10px", paddingBottom: "15px" }}>
                     {VIDEO_DATA.map((video) => (
                         <div
                             key={`desktop-${video.id}`}
@@ -282,14 +282,14 @@ const Clients = ({ id = "clients", className }: ClientsProps) => {
 
             {/* ── ORANGE PILL LOGO SCROLLER ── */}
             <div className="relative z-10 w-full bg-black py-20 rounded-t-[4rem] shadow-2xl">
-                <div className="px-[5vw] mb-8 text-center md:text-left">
+                <div className="px-[5vw] mb-8 text-center md:text-left" style={{ paddingTop: "15px", paddingBottom: "5px" }}>
                     <h3 className="text-white/20 text-3xl md:text-5xl font-bold tracking-tighter uppercase leading-none">
                         WE WORKED WITH
                     </h3>
                 </div>
 
                 {/* Orange Pill Container */}
-                <div className="mx-auto w-[70%] mt-[4vh] max-w-7xl">
+                <div className="mx-auto w-[70%] mt-[4vh] max-w-7xl" style={{ paddingTop: "1px", paddingBottom: "10px" }}>
                     <div className={clsx(
                         "relative flex items-center overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-[#f59e0b] to-[#fbbf24] px-12",
                         "h-36 md:h-48",
